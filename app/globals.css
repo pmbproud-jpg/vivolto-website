@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+:root {
+  --vivolto-purple: #5b2aa6;
+  --vivolto-magenta: #b31b63;
+  --vivolto-red: #ff1a1a;
+  --vivolto-bg: #07070a;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  /* WAŻNE: tymczasowo wymuszamy tło, żeby zabić czerwone nadpisanie */
+  background:
+    radial-gradient(1200px 800px at 15% 20%, rgba(91, 42, 166, 0.45), transparent 60%),
+    radial-gradient(1000px 700px at 85% 25%, rgba(255, 26, 26, 0.35), transparent 60%),
+    linear-gradient(135deg, rgba(91, 42, 166, 0.25), rgba(179, 27, 99, 0.22), rgba(255, 26, 26, 0.18)),
+    #07070a !important;
+
+  color: white;
+}
+
+
