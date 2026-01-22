@@ -1,3 +1,6 @@
+import Image from "next/image";
+
+
 export default function Home() {
   const nav = [
     { label: "Elektrotechnik", href: "#elektrotechnik" },
@@ -14,17 +17,23 @@ export default function Home() {
     <main className="min-h-screen text-white">
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-white/10 bg-black/40 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+        <div className="flex w-full items-center justify-between px-6 py-3">
           <a href="#hero" className="flex items-center gap-3">
-            {/* Logo – jeśli masz plik w public/, podmień src np. na /vivolto-logo.png */}
-            <div className="h-9 w-9 rounded-lg border border-white/10 bg-white/5" />
-            <div className="leading-tight">
-              <div className="text-sm font-semibold tracking-wide">VIVOLTO</div>
-              <div className="text-xs text-white/70">
-                NRW · Industrie · Gewerbe
-              </div>
-            </div>
-          </a>
+  <Image
+    src="/vivolto-logo-transparent.png"
+    alt="Vivolto"
+    width={320}
+    height={96}
+    priority
+    className="
+      h-[44px] md:h-[52px] w-auto object-contain
+      drop-shadow-[0_0_10px_rgba(255,255,255,0.55)]
+      drop-shadow-[0_12px_26px_rgba(0,0,0,0.95)]
+      contrast-125 saturate-125
+    "
+  />
+</a>
+
 
           <nav className="hidden gap-5 md:flex">
             {nav.map((item) => (
@@ -48,71 +57,57 @@ export default function Home() {
       </header>
 
       {/* Hero */}
-      <section id="hero" className="mx-auto max-w-6xl px-4 py-16 md:py-20">
-        <div className="grid gap-10 md:grid-cols-12 md:items-center">
-          <div className="md:col-span-7">
-            <h1 className="text-3xl font-semibold tracking-tight md:text-5xl">
-              Professionelle Elektrotechnik für Industrie und Gewerbe in NRW
-            </h1>
+      <section
+  id="hero"
+  className="relative min-h-screen flex items-center justify-center overflow-hidden text-center"
+>
+  {/* TŁO – ZDJĘCIE */}
+  <div
+    className="absolute inset-0 bg-cover bg-center"
+    style={{
+      backgroundImage: "url('/hero-elektrotechnik.jpg')",
+    }}
+  />
 
-            <p className="mt-4 max-w-2xl text-base text-white/75 md:text-lg">
-              Elektrotechnik · Photovoltaik · KNX-Systeme · Gebäudetechnik
-            </p>
+  {/* OVERLAY – KOLORY VIVOLTO */}
+  <div className="absolute inset-0 bg-gradient-to-br from-[#2b0f3a]/80 via-[#4b1248]/70 to-[#8b0d1a]/80" />
 
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <a
-                href="#kontakt"
-                className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-semibold text-black hover:bg-white/90"
-              >
-                Projekt anfragen
-              </a>
-              <a
-                href="#elektrotechnik"
-                className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10"
-              >
-                Leistungen ansehen
-              </a>
-            </div>
+  {/* CONTENT */}
+  <div className="relative z-10 w-full">
+    <div className="mx-auto w-full max-w-4xl px-6 py-24">
 
-            <div className="mt-10 grid gap-3 sm:grid-cols-3">
-              <Stat label="Fokus" value="Industrie / Gewerbe" />
-              <Stat label="Standard" value="Normkonformität" />
-              <Stat label="Abwicklung" value="Strukturiert" />
-            </div>
-          </div>
+      {/* HERO CONTENT */}
+      <div className="mx-auto max-w-3xl">
 
-          <div className="md:col-span-5">
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-              <div className="text-xs font-semibold tracking-wide text-white/70">
-                Leistungsbereiche
-              </div>
-              <ul className="mt-3 space-y-2 text-sm text-white/80">
-                <li className="flex items-start gap-2">
-                  <Dot /> Planung · Umsetzung · Dokumentation
-                </li>
-                <li className="flex items-start gap-2">
-                  <Dot /> Industrieanlagen · Gewerbeobjekte · Bauprojekte
-                </li>
-                <li className="flex items-start gap-2">
-                  <Dot /> PV-Dächer · PV-Freiflächen · KNX-Automation
-                </li>
-                <li className="flex items-start gap-2">
-                  <Dot /> Klare Kommunikation · saubere Übergaben
-                </li>
-              </ul>
+        <h1 className="text-4xl md:text-6xl font-semibold leading-tight tracking-tight">
+          Professionelle Elektrotechnik für Industrie und Gewerbe in NRW
+        </h1>
 
-              <div className="mt-5 rounded-xl border border-white/10 bg-black/20 p-4">
-                <div className="text-xs font-semibold text-white/70">
-                  Region
-                </div>
-                <div className="mt-1 text-sm text-white/85">
-                  NRW – Köln / Umgebung
-                </div>
-              </div>
-            </div>
-          </div>
+        <p className="mt-6 text-lg text-white/80">
+          Elektrotechnik · Photovoltaik · KNX-Systeme · Gebäudetechnik
+        </p>
+
+        <div className="mt-10 flex flex-wrap justify-center gap-4">
+          <a
+            href="#kontakt"
+            className="rounded-md bg-white px-6 py-3 text-black font-medium"
+          >
+            Projekt anfragen
+          </a>
+
+          <a
+            href="#elektrotechnik"
+            className="rounded-md border border-white/30 px-6 py-3 text-white"
+          >
+            Leistungen ansehen
+          </a>
         </div>
-      </section>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
       <Divider />
 
