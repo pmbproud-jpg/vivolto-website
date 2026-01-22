@@ -82,6 +82,8 @@ export default function Home() {
         <h1 className="text-4xl md:text-6xl font-semibold leading-tight tracking-tight">
           Professionelle Elektrotechnik für Industrie und Gewerbe in NRW
         </h1>
+        {/* test */}
+
 
         <p className="mt-6 text-lg text-white/80">
           Elektrotechnik · Photovoltaik · KNX-Systeme · Gebäudetechnik
