@@ -114,82 +114,235 @@ export default function Home() {
       <Divider />
 
       {/* Elektrotechnik */}
-      <Section
-        id="elektrotechnik"
-        title="Elektrotechnik"
-        text="Wir realisieren elektrotechnische Anlagen für Industrie, Gewerbe und anspruchsvolle Bauprojekte. Unser Leistungsumfang reicht von der Planung über die fachgerechte Umsetzung bis zur vollständigen technischen Dokumentation."
-        bullets={[
-          "Energieverteilungen · Kabelwege · Anschlüsse",
-          "Installationen für Produktions- und Gewerbeflächen",
-          "Prüfung, Dokumentation und saubere Übergaben",
-        ]}
-      />
+      <section id="elektrotechnik" className="mx-auto max-w-6xl px-6 py-16">
+  <div className="grid gap-10 md:grid-cols-12 md:items-start">
+    {/* TEKST */}
+    <div className="md:col-span-5">
+      <h2 className="text-2xl md:text-3xl font-semibold">Elektrotechnik</h2>
+
+      <p className="mt-4 text-white/75">
+        Wir realisieren elektrotechnische Anlagen für Industrie, Gewerbe und anspruchsvolle Bauprojekte.
+        Unser Leistungsumfang reicht von der Planung über die fachgerechte Umsetzung bis zur vollständigen
+        technischen Dokumentation.
+      </p>
+
+      <ul className="mt-6 space-y-2 text-white/80">
+        <li className="flex gap-2"><span>•</span><span>Energieverteilungen · Kabelwege · Anschlüsse</span></li>
+        <li className="flex gap-2"><span>•</span><span>Installationen für Produktions- und Gewerbeflächen</span></li>
+        <li className="flex gap-2"><span>•</span><span>Prüfung, Dokumentation und saubere Übergaben</span></li>
+      </ul>
+    </div>
+
+    {/* ZDJĘCIE */}
+    <div className="md:col-span-7">
+      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+        <img
+          src="/images/sections/elektrotechnik.png"
+          alt="Elektrotechnik – Industrieinstallation"
+          className="h-[280px] w-full object-cover md:h-[360px]"
+          loading="lazy"
+        />
+
+        {/* delikatny gradient dla czytelności (opcjonalnie) */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-black/0 to-black/0" />
+      </div>
+    </div>
+  </div>
+</section>
 
       <Divider />
 
-      {/* Photovoltaik */}
-      <Section
-        id="photovoltaik"
-        title="Photovoltaik"
-        text="Planung und Umsetzung von Photovoltaikanlagen für Industrie- und Gewerbedächer sowie PV-Freiflächenanlagen. Fokus auf wirtschaftliche, skalierbare und normkonforme Lösungen."
-        bullets={[
-          "Industrie- und Gewerbedächer",
-          "PV-Freiflächenanlagen",
-          "Anlagenkonzept, Ausführung, Dokumentation",
-        ]}
-      />
+     {/* PHOTOVOLTAIK */}
+<section id="photovoltaik" className="py-24">
+  <div className="mx-auto max-w-7xl grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+
+    {/* ZDJĘCIE – LEWA STRONA */}
+    <div className="md:col-span-7">
+      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 h-[280px] md:h-[360px]">
+        <img
+          src="/images/sections/photovoltaik.png"
+          alt="Photovoltaik – Industrie und Gewerbe"
+          className="h-full w-full object-cover"
+          loading="lazy"
+        />
+
+        {/* gradient poprawiający czytelność */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/40 via-black/10 to-transparent" />
+      </div>
+    </div>
+
+    {/* TEKST – PRAWA STRONA */}
+    <div className="md:col-span-5">
+      <h2 className="text-3xl font-semibold mb-6">
+        Photovoltaik
+      </h2>
+
+      <p className="text-white/80 mb-6">
+        Wir realisieren maßgeschneiderte Photovoltaikanlagen für Industrie
+        und Gewerbe – von der Planung über die Installation bis zur
+        vollständigen technischen Dokumentation.
+      </p>
+
+      <ul className="space-y-3 text-white/80">
+        <li>• PV-Dachanlagen und Freiflächenanlagen</li>
+        <li>• Wechselrichter und Einspeisemanagement</li>
+        <li>• Prüfung, Dokumentation und Übergabe</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
 
       <Divider />
 
-      {/* KNX Systeme */}
-      <Section
-        id="knx"
-        title="KNX Systeme"
-        text="Umsetzung intelligenter Gebäudeautomation auf Basis von KNX – insbesondere für Industrie, Bürogebäude und funktionale Gewerbeimmobilien."
-        bullets={[
-          "Automationsfunktionen für Gewerbe und Büro",
-          "Strukturierte Parametrierung und Inbetriebnahme",
-          "Dokumentation und Übergabe der Systemlogik",
-        ]}
-      />
+      {/* KNX SYSTEME */}
+<section id="knx" className="py-24">
+  <div className="mx-auto max-w-7xl grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+
+    {/* TEKST – LEWA STRONA */}
+    <div className="md:col-span-5">
+      <h2 className="text-3xl font-semibold mb-6">
+        KNX Systeme
+      </h2>
+
+      <p className="text-white/80 mb-6">
+        Umsetzung intelligenter Gebäudeautomation auf Basis von KNX
+        für Industrie, Bürogebäude und funktionale Gewerbeimmobilien.
+        Fokus auf Stabilität, Transparenz und saubere Integration.
+      </p>
+
+      <ul className="space-y-3 text-white/80">
+        <li>• Beleuchtung, Beschattung, Energie- und Lastmanagement</li>
+        <li>• Visualisierung und zentrale Steuerung</li>
+        <li>• Normkonforme Umsetzung und Dokumentation</li>
+      </ul>
+    </div>
+
+    {/* ZDJĘCIE – PRAWA STRONA */}
+    <div className="md:col-span-7">
+      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 h-[280px] md:h-[360px]">
+        <img
+          src="/images/sections/knx.png"
+          alt="KNX Systeme – Gebäudeautomation in Industrieumgebung"
+          className="h-full w-full object-cover"
+          loading="lazy"
+        />
+
+        {/* delikatny gradient poprawiający czytelność */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-black/40 via-black/10 to-transparent" />
+      </div>
+    </div>
+
+  </div>
+</section>
+
 
       <Divider />
 
-      {/* Gebäudetechnik */}
-      <Section
-        id="gebaeudetechnik"
-        title="Gebäudetechnik"
-        text="Elektrische Gebäudetechnik für Produktionsstätten, Bürogebäude und öffentliche Einrichtungen – zuverlässig, effizient und zukunftssicher."
-        bullets={[
-          "Technische Gebäudeausrüstung (elektrisch)",
-          "Betriebssichere Installation und klare Struktur",
-          "Langfristige Wartbarkeit und Nachrüstbarkeit",
-        ]}
-      />
+      {/* GEBÄUDETECHNIK */}
+<section id="gebaeudetechnik" className="py-24">
+  <div className="mx-auto max-w-7xl grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+
+    {/* ZDJĘCIE – LEWA STRONA */}
+    <div className="md:col-span-7">
+      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 h-[280px] md:h-[360px]">
+        <img
+          src="/images/sections/gebaeudetechnik.png"
+          alt="Gebäudetechnik – Elektrische Infrastruktur und Versorgung"
+          className="h-full w-full object-cover"
+          loading="lazy"
+        />
+
+        {/* gradient poprawiający czytelność */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/40 via-black/10 to-transparent" />
+      </div>
+    </div>
+
+    {/* TEKST – PRAWA STRONA */}
+    <div className="md:col-span-5">
+      <h2 className="text-3xl font-semibold mb-6">
+        Gebäudetechnik
+      </h2>
+
+      <p className="text-white/80 mb-6">
+        Elektrische Gebäudetechnik für Produktionsstätten, Bürogebäude
+        und öffentliche Einrichtungen – zuverlässig, effizient
+        und zukunftssicher umgesetzt.
+      </p>
+
+      <ul className="space-y-3 text-white/80">
+        <li>• Stromversorgung und Verteilungen</li>
+        <li>• Sicherheits- und Notstromsysteme</li>
+        <li>• Technische Dokumentation und Übergabe</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
 
       <Divider />
 
-      {/* Team */}
-      <section id="team" className="mx-auto max-w-6xl px-4 py-14 md:py-16">
-        <div className="grid gap-8 md:grid-cols-12 md:items-start">
-          <div className="md:col-span-5">
-            <h2 className="text-2xl font-semibold md:text-3xl">Team</h2>
-            <p className="mt-3 text-sm text-white/75 md:text-base">
-              Unser Team besteht aus erfahrenen Fachkräften mit technischem
-              Hintergrund und praxisnaher Projekterfahrung im industriellen
-              Umfeld.
-            </p>
+      {/* TEAM */}
+<section id="team" className="py-24">
+  <div className="mx-auto max-w-7xl px-6">
+    <div className="flex items-end justify-between gap-6">
+      <div>
+        <h2 className="text-3xl font-semibold">Team</h2>
+        <p className="mt-3 max-w-2xl text-white/80">
+          Unser Team besteht aus erfahrenen Fachkräften mit technischem Hintergrund
+          und praxisnaher Projekterfahrung im industriellen Umfeld.
+        </p>
+      </div>
+    </div>
+
+    {/* ZDJĘCIE GRUPOWE */}
+    <div className="mt-10">
+      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+        <img
+          src="/images/sections/team/group.png"
+          alt="Vivolto Team – Gruppenfoto"
+          className="h-[420px] w-full object-cover"
+          style={{ objectPosition: "50% 20%" }}
+
+          loading="lazy"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
+      </div>
+    </div>
+
+    {/* 6 OSÓB – SIATKA */}
+    <div className="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-6">
+      {[
+        { name: "Jens Fischer", role: "Projektleiter", src: "/images/sections/team/team-1.png" },
+        { name: "Katharina Müller", role: "Projektkoordination", src: "/images/sections/team/team-2.png" },
+        { name: "Stefan Wagner", role: "Bauleitung", src: "/images/sections/team/team-3.png" },
+        { name: "Michael Novak", role: "Service", src: "/images/sections/team/team-4.png" },
+        { name: "Frank Bauer", role: "PV-Spezialist", src: "/images/sections/team/team-5.png" },
+        { name: "Ayhan Demir", role: "Techniker", src: "/images/sections/team/team-6.png" },
+      ].map((p) => (
+        <div key={p.name} className="text-center">
+          <div className="mx-auto h-28 w-28 overflow-hidden rounded-full bg-white/5 md:h-32 md:w-32">
+            <img
+              src={p.src}
+              alt={`${p.name} – ${p.role}`}
+              className="block h-full w-full object-cover scale-[1.1]"
+              style={{ objectPosition: "50% 20%" }}
+              loading="lazy"
+              draggable={false}
+            />
           </div>
-          <div className="md:col-span-7">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Card title="Projektabwicklung" text="Planung · Koordination · Dokumentation" />
-              <Card title="Montage & Umsetzung" text="Industrie- und Gewerbeinstallationen" />
-              <Card title="Automation (KNX)" text="Funktional, wartbar, nachvollziehbar" />
-              <Card title="PV-Umsetzung" text="Dach- und Freiflächenanlagen (B2B)" />
-            </div>
-          </div>
-        </div>
-      </section>
+
+          <div className="mt-3 text-sm font-semibold">{p.name}</div>
+        <div className="text-xs text-white/70">{p.role}</div>
+      </div>
+
+      ))}
+    </div>
+  </div>
+</section>
+
 
       <Divider />
 
