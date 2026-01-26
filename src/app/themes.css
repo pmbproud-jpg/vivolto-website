@@ -1,0 +1,134 @@
+/* =========================================================
+   GLOBAL DESIGN TOKENS – FULL PAGE THEMING
+   ========================================================= */
+
+/* ---------- DEFAULT / FALLBACK ---------- */
+:root {
+  /* PAGE BACKGROUND (FULL SITE) */
+  --page-from: 20 20 28;
+  --page-via: 20 20 28;
+  --page-to: 20 20 28;
+
+  /* PANELS / CARDS */
+  --panel: 255 255 255;
+  --panel-a: 0.06;
+  --panel-hover-a: 0.10;
+
+  /* BORDERS */
+  --border: 255 255 255;
+  --border-a: 0.12;
+  --border-strong-a: 0.22;
+
+  /* TEXT */
+  --text: 255 255 255;
+  --text-muted-a: 0.80;
+  --text-faint-a: 0.55;
+
+  /* DIVIDER */
+  --divider-a: 0.12;
+
+  /* HERO OVERLAY */
+  --overlay-from: 43 15 58;
+  --overlay-via: 75 18 72;
+  --overlay-to: 139 13 26;
+}
+
+/* =========================================================
+   THEME 1 — VIVOLTO (OBECNY)
+   ========================================================= */
+:root[data-theme="vivolto"] {
+  /* PAGE BACKGROUND */
+  --page-from: 30 12 44;     /* deep violet */
+  --page-via: 22 14 38;     /* dark purple */
+  --page-to: 18 10 24;      /* almost black */
+
+  /* PANELS */
+  --panel: 255 255 255;
+  --panel-a: 0.06;
+  --panel-hover-a: 0.10;
+
+  /* BORDERS */
+  --border: 255 255 255;
+  --border-a: 0.12;
+  --border-strong-a: 0.22;
+
+  /* TEXT */
+  --text: 255 255 255;
+  --text-muted-a: 0.80;
+  --text-faint-a: 0.55;
+
+  /* DIVIDER */
+  --divider-a: 0.12;
+
+  /* HERO */
+  --overlay-from: 43 15 58;
+  --overlay-via: 75 18 72;
+  --overlay-to: 139 13 26;
+}
+
+/* =========================================================
+   THEME 2 — GRADIENT RED (Z OBRAZKA)
+   ========================================================= */
+:root[data-theme="gradient-red"] {
+  /* PAGE BACKGROUND */
+  --page-from: 94 45 134;   /* violet */
+  --page-via: 139 44 111;  /* magenta */
+  --page-to: 226 28 42;    /* red */
+
+  /* PANELS */
+  --panel: 255 255 255;
+  --panel-a: 0.08;
+  --panel-hover-a: 0.12;
+
+  /* BORDERS */
+  --border: 255 255 255;
+  --border-a: 0.15;
+  --border-strong-a: 0.28;
+
+  /* TEXT */
+  --text: 255 255 255;
+  --text-muted-a: 0.85;
+  --text-faint-a: 0.60;
+
+  /* DIVIDER */
+  --divider-a: 0.15;
+
+  /* HERO */
+  --overlay-from: 94 45 134;
+  --overlay-via: 139 44 111;
+  --overlay-to: 226 28 42;
+}
+
+/* =========================================================
+   THEME 3 — LIGHT FADE (gradient -> white, black text, no hero overlay)
+   ========================================================= */
+:root[data-theme="light-fade"] {
+  /* PAGE BACKGROUND (lewo -> prawo: kolor -> biel) */
+  --page-from: 94 45 134;   /* violet */
+  --page-via: 139 44 111;   /* magenta */
+  --page-to: 255 255 255;   /* white */
+
+  /* PANELS / BUTTONS (białe) */
+  --panel: 255 255 255;
+  --panel-a: 0.88;
+  --panel-hover-a: 0.94;
+
+  /* BORDERS (czarne, delikatne) */
+  --border: 0 0 0;
+  --border-a: 0.14;
+  --border-strong-a: 0.26;
+
+  /* TEXT (czarne) */
+  --text: 0 0 0;
+  --text-muted-a: 0.72;
+  --text-faint-a: 0.55;
+
+  /* DIVIDER */
+  --divider-a: 0.14;
+
+  /* HERO (overlay wyłączamy w page.tsx) */
+  --overlay-from: 94 45 134;
+  --overlay-via: 139 44 111;
+  --overlay-to: 226 28 42;
+}
+
