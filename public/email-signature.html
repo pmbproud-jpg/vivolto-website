@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Vivolto – E-Mail Signatur Generator</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #0d0d12;
+    color: #e0e0e0;
+    min-height: 100vh;
+  }
+  .page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px;
+  }
+  .columns {
+    display: flex;
+    gap: 40px;
+  }
+  @media (max-width: 800px) {
+    .columns { flex-direction: column; }
+  }
+
+  /* Editor Panel */
+  .editor { flex: 1; min-width: 0; }
+  .editor h1 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    background: linear-gradient(90deg, #5b2aa6, #b31b63, #ff1a1a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .editor p.subtitle { font-size: 13px; color: #888; margin-bottom: 24px; }
+  .field { margin-bottom: 14px; }
+  .field label {
+    display: block; font-size: 11px; font-weight: 600; color: #999;
+    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;
+  }
+  .field input, .field textarea {
+    width: 100%; padding: 10px 12px; font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #16161e; border: 1px solid #2a2a3a; border-radius: 8px;
+    color: #e0e0e0; outline: none; transition: border-color 0.2s;
+  }
+  .field input:focus, .field textarea:focus { border-color: #5b2aa6; }
+  .field textarea { resize: vertical; min-height: 60px; }
+
+  /* Preview Panel */
+  .preview-panel { flex: 1; min-width: 0; position: sticky; top: 24px; }
+  .preview-panel h2 {
+    font-size: 14px; font-weight: 600; color: #888;
+    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;
+  }
+  .preview-box {
+    background: #ffffff; border-radius: 12px; padding: 28px 24px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  /* Buttons */
+  .btn-row { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+  .btn {
+    padding: 12px 22px; border: none; border-radius: 8px;
+    font-size: 13px; font-weight: 600; cursor: pointer; transition: opacity 0.2s;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn-primary { background: linear-gradient(135deg, #5b2aa6, #b31b63); color: white; }
+  .btn-outlook { background: #0078d4; color: white; }
+  .btn-secondary { background: #1e1e2e; color: #ccc; border: 1px solid #2a2a3a; }
+
+  /* Instructions */
+  .instructions {
+    margin-top: 32px; padding: 20px 24px;
+    background: #13131b; border: 1px solid #2a2a3a; border-radius: 12px;
+  }
+  .instructions h2 {
+    font-size: 15px; font-weight: 700; color: #ccc; margin-bottom: 14px;
+  }
+  .instructions ol {
+    padding-left: 20px; font-size: 13px; color: #aaa; line-height: 1.8;
+  }
+  .instructions li { margin-bottom: 4px; }
+  .instructions strong { color: #e0e0e0; }
+  .instructions code {
+    background: #1e1e2e; padding: 2px 6px; border-radius: 4px;
+    font-size: 12px; color: #b31b63;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: #5b2aa6; color: white;
+    padding: 10px 24px; border-radius: 8px;
+    font-size: 13px; font-weight: 600;
+    opacity: 0; transition: all 0.3s ease;
+    pointer-events: none; z-index: 999;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="columns">
+
+    <!-- LEFT: Editor -->
+    <div class="editor">
+      <h1>Vivolto Signatur-Generator</h1>
+      <p class="subtitle">Daten eingeben, Vorschau pr&uuml;fen, Signatur herunterladen.</p>
+
+      <div class="field">
+        <label>Name</label>
+        <input type="text" id="f-name" value="Patrick Wientzek" oninput="render()">
+      </div>
+      <div class="field">
+        <label>Position</label>
+        <input type="text" id="f-role" value="Geschäftsführung" oninput="render()">
+      </div>
+      <div class="field">
+        <label>Telefon (T)</label>
+        <input type="text" id="f-phone" value="+49 (0) 2273 951 55 77" oninput="render()">
+      </div>
+      <div class="field">
+        <label>Mobil (M)</label>
+        <input type="text" id="f-mobile" value="+49 (0) 151 59054647" oninput="render()">
+      </div>
+      <div class="field">
+        <label>E-Mail</label>
+        <input type="email" id="f-email" value="kontakt@vivolto.de" oninput="render()">
+      </div>
+      <div class="field">
+        <label>Standort-Name</label>
+        <input type="text" id="f-location" value="Standort Kerpen" oninput="render()">
+      </div>
+      <div class="field">
+        <label>Stra&szlig;e</label>
+        <input type="text" id="f-street" value="Ottostraße 14" oninput="render()">
+      </div>
+      <div class="field">
+        <label>PLZ + Ort</label>
+        <input type="text" id="f-city" value="50170 Kerpen" oninput="render()">
+      </div>
+      <div class="field">
+        <label>Website</label>
+        <input type="text" id="f-web" value="www.vivolto.de" oninput="render()">
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-outlook" onclick="downloadForOutlook()">&#9993; F&uuml;r Outlook herunterladen (.htm)</button>
+        <button class="btn btn-primary" onclick="copySignature()">Signatur kopieren</button>
+        <button class="btn btn-secondary" onclick="copyHTML()">HTML-Code kopieren</button>
+      </div>
+    </div>
+
+    <!-- RIGHT: Preview -->
+    <div class="preview-panel">
+      <h2>Vorschau</h2>
+      <div class="preview-box" id="signature-preview"></div>
+    </div>
+
+  </div>
+
+  <!-- Instructions -->
+  <div class="instructions">
+    <h2>Anleitung: Signatur in Outlook einrichten</h2>
+    <ol>
+      <li>Klicke oben auf <strong>&bdquo;F&uuml;r Outlook herunterladen&ldquo;</strong> &ndash; eine <code>.htm</code>-Datei wird gespeichert.</li>
+      <li>&Ouml;ffne <strong>Outlook</strong> &rarr; <strong>Datei</strong> &rarr; <strong>Optionen</strong> &rarr; <strong>E-Mail</strong> &rarr; <strong>Signaturen</strong>.</li>
+      <li>Klicke auf <strong>&bdquo;Neu&ldquo;</strong> und gib einen Namen ein (z.&nbsp;B. deinen Vor- und Nachnamen).</li>
+      <li>Im Bearbeitungsfeld die Signatur einf&uuml;gen:
+        <br>&bull; &Ouml;ffne die heruntergeladene <code>.htm</code>-Datei im <strong>Browser</strong> (Doppelklick).
+        <br>&bull; Dr&uuml;cke <strong>Strg+A</strong> (alles markieren), dann <strong>Strg+C</strong> (kopieren).
+        <br>&bull; Gehe zur&uuml;ck zu Outlook-Signaturen und dr&uuml;cke <strong>Strg+V</strong> (einf&uuml;gen).
+      </li>
+      <li>W&auml;hle die neue Signatur als <strong>Standard f&uuml;r neue Nachrichten</strong> und/oder <strong>Antworten</strong>.</li>
+      <li>Klicke <strong>OK</strong> &ndash; fertig!</li>
+    </ol>
+  </div>
+
+</div>
+
+<div class="toast" id="toast">Kopiert!</div>
+
+<script>
+var BANNER_URL = 'https://vivolto-website.vercel.app/signature-banner.png';
+var LOGO_URL = 'https://vivolto-website.vercel.app/vivolto-logo-transparent.png';
+
+function val(id) { return document.getElementById(id).value; }
+
+function telHref(num) {
+  return 'tel:' + num.replace(/[\s()]/g, '').replace(/-/g, '');
+}
+
+function render() {
+  document.getElementById('signature-preview').innerHTML = getSignatureHTML();
+}
+
+function getSignatureHTML() {
+  var name = val('f-name'), role = val('f-role'), phone = val('f-phone');
+  var mobile = val('f-mobile'), email = val('f-email');
+  var loc = val('f-location'), street = val('f-street'), city = val('f-city');
+  var web = val('f-web');
+
+  // --- BANNER IMAGE ---
+  var banner = '<table cellpadding="0" cellspacing="0" border="0" width="520" style="border-collapse:collapse;">'
+    + '<tr><td style="padding:0;font-size:0;line-height:0;">'
+    + '<a href="https://' + web.replace(/^https?:\/\//, '') + '" style="text-decoration:none;">'
+    + '<img src="' + BANNER_URL + '" alt="Vivolto - Geb\u00e4udetechnik \u00b7 Elektrotechnik \u00b7 Photovoltaik \u00b7 KNX-Systeme" width="520" style="display:block;width:520px;height:auto;border:0;" />'
+    + '</a>'
+    + '</td></tr>'
+    + '</table>';
+
+  // --- CONTACT DATA ---
+  var contact = '<table cellpadding="0" cellspacing="0" border="0" width="520" style="border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;background:#ffffff;">'
+    + '<tr><td style="padding:14px 0 4px 0;">'
+    + '<strong style="font-size:15px;color:#1a1a1a;">' + name + '</strong>'
+    + '</td></tr>'
+    + '<tr><td style="padding:0 0 10px 0;">'
+    + '<strong style="font-size:12px;color:#5b2aa6;">' + role + '</strong>'
+    + '</td></tr>'
+    + (phone ? '<tr><td style="padding:0 0 3px 0;font-size:12px;">'
+      + '<span style="color:#999;">T</span>&nbsp;&nbsp;'
+      + '<a href="' + telHref(phone) + '" style="color:#1a1a1a;text-decoration:none;">' + phone + '</a>'
+      + '</td></tr>' : '')
+    + (mobile ? '<tr><td style="padding:0 0 3px 0;font-size:12px;">'
+      + '<span style="color:#999;">M</span>&nbsp;'
+      + '<a href="' + telHref(mobile) + '" style="color:#1a1a1a;text-decoration:none;">' + mobile + '</a>'
+      + '</td></tr>' : '')
+    + '<tr><td style="padding:0 0 12px 0;font-size:12px;">'
+    + '<span style="color:#999;">E</span>&nbsp;&nbsp;'
+    + '<a href="mailto:' + email + '" style="color:#5b2aa6;text-decoration:none;">' + email + '</a>'
+    + '</td></tr>'
+    + '<tr><td style="padding:0 0 10px 0;font-size:0;line-height:0;">'
+    + '<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td style="height:1px;background:#eee;"></td></tr></table>'
+    + '</td></tr>'
+    + (loc ? '<tr><td style="padding:0 0 2px 0;">'
+      + '<strong style="font-size:11px;color:#b31b63;">' + loc + '</strong>'
+      + '</td></tr>' : '')
+    + (street ? '<tr><td style="padding:0 0 1px 0;">'
+      + '<span style="font-size:11px;color:#666;">' + street + '</span>'
+      + '</td></tr>' : '')
+    + (city ? '<tr><td style="padding:0 0 10px 0;">'
+      + '<span style="font-size:11px;color:#666;">' + city + '</span>'
+      + '</td></tr>' : '')
+    + '<tr><td style="padding:0 0 12px 0;">'
+    + '<a href="https://' + web.replace(/^https?:\/\//, '') + '" style="font-size:11px;font-weight:bold;color:#5b2aa6;text-decoration:none;">' + web + '</a>'
+    + '</td></tr>'
+    + '</table>';
+
+  // --- DISCLAIMER ---
+  var disc = '<table cellpadding="0" cellspacing="0" border="0" width="520" style="border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;">'
+    + '<tr><td style="padding:0;">'
+    + '<span style="font-size:9px;color:#999;line-height:1.4;">Diese E-Mail und ihre Anh\u00e4nge sind vertraulich und ausschlie\u00dflich f\u00fcr den Empf\u00e4nger bestimmt. Sollten Sie diese Nachricht irrt\u00fcmlich erhalten haben, bitten wir um kurze R\u00fcckmeldung und L\u00f6schung.</span>'
+    + '</td></tr></table>';
+
+  return banner + contact + disc;
+}
+
+function getFullHTM() {
+  return '<html>\n<head>\n<meta http-equiv="Content-Type" content="text/html; charset=utf-8">\n</head>\n<body style="margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;">\n'
+    + getSignatureHTML()
+    + '\n</body>\n</html>';
+}
+
+function downloadForOutlook() {
+  var name = val('f-name').replace(/\s+/g, '-') || 'Vivolto-Signatur';
+  var blob = new Blob([getFullHTM()], { type: 'text/html;charset=utf-8' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name + '.htm';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+  showToast('Datei "' + name + '.htm" heruntergeladen!');
+}
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 3000);
+}
+
+function copySignature() {
+  var el = document.getElementById('signature-preview');
+  var range = document.createRange();
+  range.selectNodeContents(el);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+  var ok = false;
+  try { ok = document.execCommand('copy'); } catch(e) {}
+  if (!ok) {
+    var html = el.innerHTML;
+    navigator.clipboard.write([
+      new ClipboardItem({
+        'text/html': new Blob([html], {type:'text/html'}),
+        'text/plain': new Blob([el.innerText], {type:'text/plain'})
+      })
+    ]).then(function(){ showToast('Signatur kopiert!'); });
+  } else {
+    showToast('Signatur kopiert! Mit Strg+V einfuegen.');
+  }
+  sel.removeAllRanges();
+}
+
+function copyHTML() {
+  navigator.clipboard.writeText(getFullHTM()).then(function(){
+    showToast('HTML-Code kopiert!');
+  });
+}
+
+render();
+</script>
+
+</body>
+</html>
