@@ -105,7 +105,7 @@ export default function HeroWeather() {
         </div>
       </div>
 
-      <style jsx global>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         @keyframes floaty {
           0% { transform: translateY(0); }
           50% { transform: translateY(-3px); }
@@ -131,7 +131,7 @@ export default function HeroWeather() {
         .vw-rain2 { animation: rainDrop 1.0s linear infinite 0.25s; }
         .vw-rain3 { animation: rainDrop 1.0s linear infinite 0.5s; }
         .vw-wind { animation: windWave 1.1s ease-in-out infinite; }
-      `}</style>
+      ` }} />
     </div>
   );
 }
