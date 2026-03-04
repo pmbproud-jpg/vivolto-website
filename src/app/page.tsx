@@ -367,11 +367,17 @@ export default function Home() {
         <div className="relative z-10 w-full">
           <div className="mx-auto w-full max-w-4xl px-6 py-24">
             <div className="mx-auto max-w-3xl">
-              <h1 className="text-4xl md:text-6xl font-semibold leading-tight tracking-tight">
+              <h1
+                className="text-4xl md:text-6xl font-semibold leading-tight tracking-tight"
+                style={theme === "light-fade" ? { color: "rgba(55, 55, 55, 0.85)" } : undefined}
+              >
                 Professionelle Elektrotechnik für Industrie und Gewerbe in NRW
               </h1>
 
-              <p className="mt-6 text-lg" style={textMuted}>
+              <p
+                className="mt-6 text-lg"
+                style={theme === "light-fade" ? { color: "rgba(80, 80, 80, 0.75)" } : textMuted}
+              >
                 Elektrotechnik · Photovoltaik · KNX-Systeme · Gebäudetechnik
               </p>
 
@@ -379,7 +385,12 @@ export default function Home() {
                 <a
                   href="#kontakt"
                   onClick={onNavClick("#kontakt")}
-                  className="rounded-md bg-white px-6 py-3 text-black font-medium"
+                  className={`rounded-md px-6 py-3 font-medium ${
+                    theme === "light-fade"
+                      ? "backdrop-blur-sm border text-gray-700"
+                      : "bg-white text-black"
+                  }`}
+                  style={theme === "light-fade" ? { backgroundColor: "rgba(255,255,255,0.35)", borderColor: "rgba(0,0,0,0.15)" } : undefined}
                 >
                   Projekt anfragen
                 </a>
