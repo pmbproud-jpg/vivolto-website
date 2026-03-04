@@ -368,15 +368,25 @@ export default function Home() {
           <div className="mx-auto w-full max-w-4xl px-6 py-24">
             <div className="mx-auto max-w-3xl">
               <h1
-                className="text-4xl md:text-6xl font-semibold leading-tight tracking-tight"
-                style={theme === "light-fade" ? { color: "rgba(120, 120, 120, 0.9)" } : undefined}
+                className={`text-4xl md:text-6xl font-semibold leading-tight tracking-tight ${
+                  theme === "light-fade" ? "inline-block rounded-xl px-6 py-4 backdrop-blur-sm" : ""
+                }`}
+                style={theme === "light-fade"
+                  ? { color: "rgba(100, 100, 100, 0.95)", backgroundColor: "rgba(255,255,255,0.45)" }
+                  : undefined
+                }
               >
                 Professionelle Elektrotechnik für Industrie und Gewerbe in NRW
               </h1>
 
               <p
-                className="mt-6 text-lg"
-                style={theme === "light-fade" ? { color: "rgba(140, 140, 140, 0.85)" } : textMuted}
+                className={`mt-6 text-lg ${
+                  theme === "light-fade" ? "inline-block rounded-lg px-4 py-2 backdrop-blur-sm" : ""
+                }`}
+                style={theme === "light-fade"
+                  ? { color: "rgba(120, 120, 120, 0.9)", backgroundColor: "rgba(255,255,255,0.4)" }
+                  : textMuted
+                }
               >
                 Elektrotechnik · Photovoltaik · KNX-Systeme · Gebäudetechnik
               </p>
