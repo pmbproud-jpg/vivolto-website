@@ -54,12 +54,6 @@ export default function Impressum() {
 
           <div className="space-y-2 text-gray-700">
             <p>
-              <span className="font-semibold">Telefon:</span> +49 (0) 2273 951 55 77
-            </p>
-            <p>
-              <span className="font-semibold">Mobil:</span> +49 (0) 151 59054647
-            </p>
-            <p>
               <span className="font-semibold">E-Mail:</span>{" "}
               <a
                 href="mailto:info@vivolto.de"
@@ -80,32 +74,6 @@ export default function Impressum() {
           </div>
         </section>
 
-        <hr className="my-8" />
-
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-            Bankverbindung
-          </h2>
-
-          <div className="space-y-2 text-gray-700">
-            <p className="font-semibold">Hauptkonto Olinda Zweigniederlassung Deutschland</p>
-            <p>
-              <span className="font-semibold">IBAN:</span>{" "}
-              <code className="bg-gray-100 px-2 py-1 rounded">
-                DE49 1001 0123 0336 3974 08
-              </code>
-            </p>
-            <p>
-              <span className="font-semibold">BIC/SWIFT:</span>{" "}
-              <code className="bg-gray-100 px-2 py-1 rounded">QNTODEB2XXX</code>
-            </p>
-            <p>
-              <span className="font-semibold">Adresse des Kontoinhabers:</span>
-              <br />
-              Vivolto GmbH, Ottostraße 14, 50170 Kerpen - DE
-            </p>
-          </div>
-        </section>
 
         <hr className="my-8" />
 

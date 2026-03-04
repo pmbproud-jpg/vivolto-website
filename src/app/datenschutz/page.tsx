@@ -47,12 +47,6 @@ export default function Datenschutz() {
             <p>Ottostraße 14</p>
             <p>50170 Kerpen</p>
             <p>Deutschland</p>
-            <p className="mt-4">
-              <span className="font-semibold">Telefon:</span> +49 (0) 2273 951 55 77
-            </p>
-            <p>
-              <span className="font-semibold">Mobil:</span> +49 (0) 151 59054647
-            </p>
             <p>
               <span className="font-semibold">E-Mail:</span>{" "}
               <a

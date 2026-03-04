@@ -743,18 +743,6 @@ export default function Home() {
                 </div>
                 <div className="rounded-xl border p-4" style={panelStyle}>
                   <div className="text-xs font-semibold" style={textMuted}>
-                    Telefon
-                  </div>
-                  <div className="mt-1 text-sm">+49 (0) 2273 951 55 77</div>
-                </div>
-                <div className="rounded-xl border p-4" style={panelStyle}>
-                  <div className="text-xs font-semibold" style={textMuted}>
-                    Mobil
-                  </div>
-                  <div className="mt-1 text-sm">+49 (0) 151 59054647</div>
-                </div>
-                <div className="rounded-xl border p-4" style={panelStyle}>
-                  <div className="text-xs font-semibold" style={textMuted}>
                     Region
                   </div>
                   <div className="mt-1 text-sm">NRW – Köln / Umgebung</div>
