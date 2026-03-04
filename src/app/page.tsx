@@ -369,14 +369,14 @@ export default function Home() {
             <div className="mx-auto max-w-3xl">
               <h1
                 className="text-4xl md:text-6xl font-semibold leading-tight tracking-tight"
-                style={theme === "light-fade" ? { color: "rgba(55, 55, 55, 0.85)" } : undefined}
+                style={theme === "light-fade" ? { color: "rgba(120, 120, 120, 0.9)" } : undefined}
               >
                 Professionelle Elektrotechnik für Industrie und Gewerbe in NRW
               </h1>
 
               <p
                 className="mt-6 text-lg"
-                style={theme === "light-fade" ? { color: "rgba(80, 80, 80, 0.75)" } : textMuted}
+                style={theme === "light-fade" ? { color: "rgba(140, 140, 140, 0.85)" } : textMuted}
               >
                 Elektrotechnik · Photovoltaik · KNX-Systeme · Gebäudetechnik
               </p>
@@ -398,8 +398,15 @@ export default function Home() {
                 <a
                   href="#elektrotechnik"
                   onClick={onNavClick("#elektrotechnik")}
-                  className="rounded-md border px-6 py-3"
-                  style={{ ...borderStrongStyle, color: "rgb(var(--text))" }}
+                  className={`rounded-md border px-6 py-3 ${
+                    theme === "light-fade"
+                      ? "backdrop-blur-sm font-medium text-gray-700"
+                      : ""
+                  }`}
+                  style={theme === "light-fade"
+                    ? { backgroundColor: "rgba(255,255,255,0.35)", borderColor: "rgba(0,0,0,0.15)", color: "rgba(120,120,120,0.9)" }
+                    : { ...borderStrongStyle, color: "rgb(var(--text))" }
+                  }
                 >
                   Leistungen ansehen
                 </a>
