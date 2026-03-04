@@ -2,6 +2,10 @@
 
 import Image from "next/image";
 import React, { useEffect, useMemo, useState } from "react";
+import dynamic from "next/dynamic";
+
+const HeroWeather = dynamic(() => import("../components/HeroWeatherClient"), { ssr: false });
+const EmailFallback = dynamic(() => import("../components/EmailFallback"), { ssr: false });
 
 export default function Home() {
   const nav = [
@@ -707,7 +711,19 @@ export default function Home() {
                   <div className="text-xs font-semibold" style={textMuted}>
                     E-Mail
                   </div>
-                  <div className="mt-1 text-sm">kontakt@vivolto.de</div>
+                  <div className="mt-1 text-sm">info@vivolto.de</div>
+                </div>
+                <div className="rounded-xl border p-4" style={panelStyle}>
+                  <div className="text-xs font-semibold" style={textMuted}>
+                    Telefon
+                  </div>
+                  <div className="mt-1 text-sm">+49 (0) 2273 951 55 77</div>
+                </div>
+                <div className="rounded-xl border p-4" style={panelStyle}>
+                  <div className="text-xs font-semibold" style={textMuted}>
+                    Mobil
+                  </div>
+                  <div className="mt-1 text-sm">+49 (0) 151 59054647</div>
                 </div>
                 <div className="rounded-xl border p-4" style={panelStyle}>
                   <div className="text-xs font-semibold" style={textMuted}>
@@ -718,12 +734,40 @@ export default function Home() {
               </div>
 
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                <a
-                  href="mailto:kontakt@vivolto.de?subject=Projektanfrage%20Vivolto"
+                <button
+                  onClick={(e) => {
+                    // pierwsza próba: spróbuj otworzyć mailto
+                    // eslint-disable-next-line no-console
+                    console.log('Kontakt klicken');
+                    try {
+                      window.open('mailto:info@vivolto.de?subject=Projektanfrage%20Vivolto', '_self');
+                    } catch (err) {
+                      // jeżeli window.open rzuci, spróbuj przypisać lokację
+                      // eslint-disable-next-line no-console
+                      console.error('window.open failed', err);
+                      window.location.assign('mailto:info@vivolto.de?subject=Projektanfrage%20Vivolto');
+                    }
+
+                    // pokaż fallback po krótkim czasie, jeśli klient się nie uruchomił
+                    setTimeout(() => {
+                      try {
+                        // jeśli strona wciąż aktywna, ustaw flagę pokaż fallback
+                        // (nie możemy wykryć bezpośrednio, czy klient pocztowy otwarto)
+                        // eslint-disable-next-line no-console
+                        console.log('Wyświetlam fallback adresu e-mail');
+                        // @ts-ignore - useState setter is available in scope
+                        (window as any).__showEmailFallback = true;
+                        // trigger React re-render via dispatchEvent
+                        window.dispatchEvent(new CustomEvent('showEmailFallback'));
+                      } catch (err) {
+                        // ignore
+                      }
+                    }, 600);
+                  }}
                   className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-semibold text-black hover:bg-white/90"
                 >
                   Kontakt aufnehmen
-                </a>
+                </button>
                 <a
                   href="#hero"
                   onClick={onNavClick("#hero")}
@@ -734,9 +778,10 @@ export default function Home() {
                 </a>
               </div>
 
+              <EmailFallback />
+
               <p className="mt-4 text-xs" style={textFaint}>
-                Hinweis: Platzhalter-Kontaktdaten – können wir später exakt setzen (Telefon, Adresse,
-                Impressum/Datenschutz).
+                Vivolto GmbH • Ottostraße 14 • 50170 Kerpen
               </p>
             </div>
           </div>
@@ -752,7 +797,17 @@ export default function Home() {
               Kontakt
             </a>
             <span style={{ color: "rgb(var(--text) / 0.25)" }}>|</span>
-            <span>Impressum / Datenschutz (später)</span>
+            <a href="/impressum" target="_blank" rel="noopener noreferrer" className="hover:opacity-90">
+              Impressum
+            </a>
+            <span style={{ color: "rgb(var(--text) / 0.25)" }}>|</span>
+            <a href="/datenschutz" target="_blank" rel="noopener noreferrer" className="hover:opacity-90">
+              Datenschutz
+            </a>
+            <span style={{ color: "rgb(var(--text) / 0.25)" }}>|</span>
+            <a href="/agb" target="_blank" rel="noopener noreferrer" className="hover:opacity-90">
+              AGB
+            </a>
           </div>
         </div>
       </footer>
@@ -760,143 +815,7 @@ export default function Home() {
   );
 }
 
-/* =========================
-   HERO WEATHER (top-right)
-   ========================= */
-
-function HeroWeather() {
-  const [state, setState] = useState<{
-    tempC: number;
-    code: number;
-    windKmh: number;
-    ok: boolean;
-  } | null>(null);
-
-  // Köln fallback (NRW)
-  const FALLBACK = { lat: 50.9375, lon: 6.9603 };
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const fetchWeather = async (lat: number, lon: number) => {
-      const url =
-        `https://api.open-meteo.com/v1/forecast` +
-        `?latitude=${lat}&longitude=${lon}` +
-        `&current=temperature_2m,weather_code,wind_speed_10m` +
-        `&wind_speed_unit=kmh`;
-
-      const res = await fetch(url, { cache: "no-store" });
-      const data = await res.json();
-
-      const tempC = Math.round(data?.current?.temperature_2m ?? 0);
-      const code = Number(data?.current?.weather_code ?? 0);
-      const windKmh = Math.round(data?.current?.wind_speed_10m ?? 0);
-
-      if (!cancelled) setState({ tempC, code, windKmh, ok: true });
-    };
-
-    const run = () => {
-      if (!navigator.geolocation) {
-        fetchWeather(FALLBACK.lat, FALLBACK.lon).catch(() => {
-          if (!cancelled) setState({ tempC: 0, code: 0, windKmh: 0, ok: false });
-        });
-        return;
-      }
-
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          fetchWeather(pos.coords.latitude, pos.coords.longitude).catch(() => {
-            fetchWeather(FALLBACK.lat, FALLBACK.lon).catch(() => {
-              if (!cancelled) setState({ tempC: 0, code: 0, windKmh: 0, ok: false });
-            });
-          });
-        },
-        () => {
-          fetchWeather(FALLBACK.lat, FALLBACK.lon).catch(() => {
-            if (!cancelled) setState({ tempC: 0, code: 0, windKmh: 0, ok: false });
-          });
-        },
-        { enableHighAccuracy: false, timeout: 4000, maximumAge: 10 * 60 * 1000 }
-      );
-    };
-
-    run();
-    const t = window.setInterval(run, 15 * 60 * 1000);
-
-    return () => {
-      cancelled = true;
-      window.clearInterval(t);
-    };
-  }, []);
-
-  const label = useMemo(() => {
-    if (!state?.ok) return "Wetter";
-    return weatherLabel(state.code, state.windKmh);
-  }, [state]);
-
-  const kind = useMemo(() => {
-    if (!state?.ok) return "unknown" as const;
-    return weatherKind(state.code, state.windKmh);
-  }, [state]);
-
-  return (
-    <div className="pointer-events-none absolute right-5 top-5 z-20 select-none">
-      <div
-        className="flex items-center gap-3 px-4 py-3"
-        style={{
-          backgroundColor: "transparent",
-          borderColor: "transparent",
-          color: "rgb(var(--text) / 0.92)",
-        }}
-      >
-
-        <div className="h-10 w-10">
-          <WeatherIcon kind={kind} />
-        </div>
-
-        <div className="leading-tight">
-          <div className="text-sm font-semibold">
-            {state?.ok ? `${state.tempC}°C` : "—"}
-          </div>
-          <div
-            className="text-xs"
-            style={{ color: "rgb(var(--text) / var(--text-muted-a))" }}
-          >
-            {label}
-          </div>
-        </div>
-      </div>
-
-      <style jsx global>{`
-        @keyframes floaty {
-          0% { transform: translateY(0); }
-          50% { transform: translateY(-3px); }
-          100% { transform: translateY(0); }
-        }
-        @keyframes spinSlow {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-        @keyframes rainDrop {
-          0% { transform: translateY(0); opacity: 0; }
-          20% { opacity: 1; }
-          100% { transform: translateY(16px); opacity: 0; }
-        }
-        @keyframes windWave {
-          0% { transform: translateX(0); opacity: 0.4; }
-          50% { opacity: 0.9; }
-          100% { transform: translateX(10px); opacity: 0.4; }
-        }
-        .vw-float { animation: floaty 2.2s ease-in-out infinite; }
-        .vw-spin { animation: spinSlow 6s linear infinite; transform-origin: 50% 50%; }
-        .vw-rain1 { animation: rainDrop 1.0s linear infinite; }
-        .vw-rain2 { animation: rainDrop 1.0s linear infinite 0.25s; }
-        .vw-rain3 { animation: rainDrop 1.0s linear infinite 0.5s; }
-        .vw-wind { animation: windWave 1.1s ease-in-out infinite; }
-      `}</style>
-    </div>
-  );
-}
+/* HeroWeather is rendered dynamically on the client (no SSR) */
 
 function weatherKind(code: number, windKmh: number) {
   if (windKmh >= 30) return "wind" as const;
